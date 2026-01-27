@@ -1,0 +1,39 @@
+ext {
+    versions = [
+            springBoot      : '3.4.1',
+            postgreSQL      : '42.7.4',
+            lombok          : '1.18.34',
+            swagger         : '2.7.0',
+            //openfeign       : '13.5',
+            jjwt            : '0.11.5'
+    ]
+    libs = [
+            springBootStarterWeb      : "org.springframework.boot:spring-boot-starter-web",
+            springBootDataJpa         : "org.springframework.boot:spring-boot-starter-data-jpa",
+            springBootStarterSecurity : "org.springframework.boot:spring-boot-starter-security",
+            springBootStarterMongoDB  : "org.springframework.boot:spring-boot-starter-data-mongodb",
+            springBootStarterValidation: "org.springframework.boot:spring-boot-starter-validation",
+            springBootStarterActuator  : "org.springframework.boot:spring-boot-starter-actuator",
+
+            postgreSQL                : "org.postgresql:postgresql:${versions.postgreSQL}",
+            lombok                    : "org.projectlombok:lombok:${versions.lombok}",
+            swagger                   : "org.springdoc:springdoc-openapi-starter-webmvc-ui:${versions.swagger}",
+
+
+
+            // Tracing & Logging Kütüphaneleri
+            micrometerTracing         : "io.micrometer:micrometer-tracing-bridge-brave",
+            zipkinReporter            : "io.zipkin.reporter2:zipkin-reporter-brave",
+            //openfeign      : "org.springframework.cloud:spring-cloud-starter-openfeign",
+            //feignMicrometer : "io.github.openfeign:feign-micrometer:${versions.openfeign}",
+
+
+            // RabbitMQ
+            springBootStarterAmqp : "org.springframework.boot:spring-boot-starter-amqp",
+
+            // JWT üretimi için standart kütüphane
+            jjwtApi: "io.jsonwebtoken:jjwt-api:${versions.jjwt}",
+            jjwtImpl: "io.jsonwebtoken:jjwt-impl:${versions.jjwt}",
+            jjwtJackson: "io.jsonwebtoken:jjwt-jackson:${versions.jjwt}"
+    ]
+}

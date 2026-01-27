@@ -1,0 +1,16 @@
+dependencies {
+    implementation libs.springBootStarterWeb
+    implementation libs.springBootDataJpa
+    implementation libs.springBootStarterSecurity
+    implementation libs.springBootStarterValidation
+    implementation libs.postgreSQL
+    implementation libs.swagger
+    //implementation libs.openfeign // İsmin dependencies.gradle ile aynı olduğuna emin ol
+
+    implementation libs.jjwtApi
+    runtimeOnly libs.jjwtImpl
+    runtimeOnly libs.jjwtJackson
+
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+}

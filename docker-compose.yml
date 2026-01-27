@@ -1,0 +1,61 @@
+services:
+  # --- AUTH SERVICE İÇİN POSTGRES ---
+  postgres-db:
+    image: postgres:16
+    container_name: auth-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: auth_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - auth_pgdata:/var/lib/postgresql/data
+
+  # --- USER SERVICE İÇİN MONGO ---
+  mongo-db:
+    image: mongo:latest
+    container_name: user-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - user_mongodata:/data/db
+
+  # --- POSTGRES YÖNETİM (PGADMIN) ---
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: social-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@local.dev
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres-db
+
+
+      # --- LOG YÖNETİM (ZIPKIN) ---
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: social-zipkin
+    ports:
+      - "9411:9411"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672" 
+
+
+volumes:
+  auth_pgdata:
+  user_mongodata:
+
+networks:
+  default:
+    name: social-network

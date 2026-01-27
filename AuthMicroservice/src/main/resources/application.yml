@@ -1,0 +1,54 @@
+server:
+  port: 9090
+
+spring:
+  config:
+    import: "optional:file:.env[.properties]"
+
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    port: ${RABBIT_PORT}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+
+  application:
+    name: auth-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_db
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+
+management:
+  observations:
+    key-values:
+      application: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      type: "W3C"
+  zipkin:
+    tracing:
+      endpoint: "http://localhost:9411/api/v2/spans"
+
+logging:
+  # Spring Boot 3'ün bu verileri loglara enjekte etmesini sağlar
+  register-proxy: true
+  pattern:
+    level: "%5p [%X{traceId:-},%X{spanId:-}]"
+
+
+auth:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    issuer: ${JWT_ISSUER}
