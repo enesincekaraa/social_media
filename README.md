@@ -22,3 +22,11 @@ Proje, servisler arası bağımlılığı minimuma indirmek için Asenkron Haber
 *User Service: Kullanıcı profillerini ve sosyal etkileşimleri yönetir.
 
 *RabbitMQ: Kayıt, güncelleme ve silme olaylarını servisler arasında asenkron olarak taşır.
+
+
+Aşama,Durum,Kullanılan Teknolojiler
+1. Temel Altyapı,✅ Tamamlandı,"Java 21, Spring Boot 3, Docker Compose"
+2. Veritabanı Yönetimi,✅ Tamamlandı,"PostgreSQL (Relational), MongoDB (NoSQL)"
+3. Güvenlik & İzleme,✅ Tamamlandı,"JWT, Zipkin, Micrometer"
+4. Asenkron Haberleşme,✅ Tamamlandı,RabbitMQ (Event-Driven Sync)
+5. Performans & Cache,🏗️ Sırada,"Redis, Cache Eviction Patterns"
