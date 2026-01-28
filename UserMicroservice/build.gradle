@@ -6,6 +6,8 @@ dependencies {
     //implementation libs.openfeign
     implementation libs.swagger
 
+    implementation project(':Common')
+
     implementation libs.jjwtApi
     runtimeOnly libs.jjwtImpl
     runtimeOnly libs.jjwtJackson

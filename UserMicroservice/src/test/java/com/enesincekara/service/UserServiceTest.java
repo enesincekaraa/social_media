@@ -3,6 +3,7 @@ package com.enesincekara.service;
 import com.enesincekara.config.JwtTokenManager;
 import com.enesincekara.dto.response.UserResponse;
 import com.enesincekara.entity.User;
+import com.enesincekara.projection.IUserProfileProjection;
 import com.enesincekara.rabbitmq.model.RegisterModel;
 import com.enesincekara.rabbitmq.producer.UserProducer;
 import com.enesincekara.repository.UserRepository;
@@ -33,6 +34,9 @@ class UserServiceTest {
 
     @Mock
     private UserProducer userProducer;
+
+    @Mock
+    IUserProfileProjection userProfileProjection;
 
     @InjectMocks
     private UserService userService;
@@ -69,23 +73,28 @@ class UserServiceTest {
 
     @Test
     @DisplayName("Success_Get_User_Profile_Case")
-    void getProfile_ShouldReturnUserResponse_WhenTokenIsValid(){
+    void getProfile_ShouldReturnUserResponse_WhenTokenIsValid() {
+
         String bearerToken = "Bearer valid_token";
         String token = "valid_token";
         UUID authId = UUID.randomUUID();
 
-
-        User mockUser=User.createProfile(authId,"enes","enes@test.com");
+        IUserProfileProjection mockProjection = mock(IUserProfileProjection.class);
+        when(mockProjection.getUsername()).thenReturn("enes");
+        when(mockProjection.getEmail()).thenReturn("enes@test.com");
+        when(mockProjection.getAvatar()).thenReturn("default_avatar");
+        when(mockProjection.getBio()).thenReturn("Hi, I am Enes");
 
         when(jwtTokenManager.getIdFromToken(token)).thenReturn(Optional.of(authId));
-        when(userRepository.findByAuthId(authId)).thenReturn(Optional.of(mockUser));
+
+        when(userRepository.findByAuthIdProjected(authId)).thenReturn(Optional.of(mockProjection));
 
         UserResponse response = userService.getProfile(bearerToken);
 
         assertNotNull(response);
-        assertEquals("enes",response.username());
-        verify(userRepository,times(1)).findByAuthId(authId);
+        assertEquals("enes", response.username());
+        assertEquals("enes@test.com", response.email());
 
-
+        verify(userRepository, times(1)).findByAuthIdProjected(authId);
     }
 }

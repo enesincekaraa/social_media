@@ -1,5 +1,8 @@
 package com.enesincekara.service;
 
+import com.enesincekara.exception.BaseException;
+import com.enesincekara.exception.ErrorType;
+import com.enesincekara.projection.IUserProfileProjection;
 import com.enesincekara.rabbitmq.model.RegisterModel;
 import com.enesincekara.rabbitmq.model.SoftDeleteModel;
 import com.enesincekara.config.JwtTokenManager;
@@ -53,12 +56,15 @@ public class UserService {
 
     public UserResponse getProfile(String bearerToken){
         UUID authId = getAuthId(getToken(bearerToken));
-        User u =  getUser(authId);
+
+        IUserProfileProjection projection =userRepository.findByAuthIdProjected(authId)
+                .orElseThrow(()-> new BaseException(ErrorType.USER_NOT_FOUND));
+
         return new UserResponse(
-                u.getUsername(),
-                u.getEmail(),
-                u.getAvatar(),
-                u.getBio()
+                projection.getUsername(),
+                projection.getEmail(),
+                projection.getAvatar(),
+                projection.getBio()
         );
     }
 
@@ -77,7 +83,7 @@ public class UserService {
     public void updateLastLogin(UUID authId, LocalDateTime lastLoginDate, String ip){
         User u = userRepository.findByAuthId(authId)
                 .orElseThrow(
-                        ()-> new RuntimeException("User not found!")
+                        ()-> new BaseException(ErrorType.USER_NOT_FOUND)
                 );
         u.updateLastLogin(lastLoginDate, ip);
         userRepository.save(u);
@@ -88,13 +94,13 @@ public class UserService {
 
     private User getUser(UUID authId){
         return userRepository.findByAuthId(authId)
-                .orElseThrow(()-> new RuntimeException("User not found"));
+                .orElseThrow(()-> new BaseException(ErrorType.USER_NOT_FOUND));
     }
     private String getToken(String bearerToken){
         return bearerToken.substring(7);
     }
     private UUID getAuthId(String bearerToken){
         return jwtTokenManager.getIdFromToken(bearerToken)
-                .orElseThrow(()-> new RuntimeException("User Not Found"));
+                .orElseThrow(()-> new BaseException(ErrorType.USER_NOT_FOUND));
     }
 }

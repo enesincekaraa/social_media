@@ -5,7 +5,7 @@ dependencies {
     implementation libs.springBootStarterValidation
     implementation libs.postgreSQL
     implementation libs.swagger
-    //implementation libs.openfeign // İsmin dependencies.gradle ile aynı olduğuna emin ol
+    implementation project(':Common')
 
     implementation libs.jjwtApi
     runtimeOnly libs.jjwtImpl
