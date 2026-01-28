@@ -23,6 +23,7 @@ public class RabbitMqConfig {
     public static final String QUEUE_AUTH_SOFT_DELETE = "queue-auth-soft-delete";
     public static final String QUEUE_CREATE_PROFILE = "queue-create-profile";
     public static final String QUEUE_UPDATE_AUTH = "queue-update-auth";
+    public static final String QUEUE_LOGIN_EVENT = "queue-login-event";
 
     @Bean
     public DirectExchange userExchange() {

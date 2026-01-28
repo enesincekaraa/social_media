@@ -25,6 +25,8 @@ public class User {
     private String avatar;
     private String bio;
     private LocalDateTime createdAt;
+    private LocalDateTime lastLoginDate;
+    private String lastLoginIp;
 
     public static User createProfile(UUID authId, String username, String email) {
         return User.builder()
@@ -50,5 +52,10 @@ public class User {
         if (email == null || email.isBlank()) {
             throw new IllegalArgumentException("Email cannot be null or empty");
         }
+    }
+
+    public void updateLastLogin(LocalDateTime lastLoginDate, String ip) {
+        this.lastLoginDate = lastLoginDate;
+        this.lastLoginIp = ip;
     }
 }

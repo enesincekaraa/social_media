@@ -5,6 +5,7 @@ import com.enesincekara.dto.request.LoginRequestDto;
 import com.enesincekara.dto.request.RegisterRequestDto;
 import com.enesincekara.dto.response.LoginResponseDto;
 import com.enesincekara.entity.Auth;
+import com.enesincekara.rabbitmq.model.LoginModel;
 import com.enesincekara.rabbitmq.model.RegisterModel;
 import com.enesincekara.rabbitmq.producer.AuthProducer;
 import com.enesincekara.repository.AuthRepository;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -24,10 +26,10 @@ public class AuthService {
     private final AuthProducer authProducer;
 
     public Auth register(RegisterRequestDto req) {
-        if (repository.existsByUsername(req.username())) {
+        if (repository.isUsernameExists(req.username())) {
             throw new RuntimeException("Username is already in use");
         }
-        if (repository.existsByEmail(req.email())) {
+        if (repository.isEmailExists(req.email())) {
             throw new RuntimeException("Email is already in use");
         }
         Auth auth = Auth.create(req,passwordService);
@@ -37,9 +39,9 @@ public class AuthService {
                 auth.getUsername(),
                 auth.getEmail()
         );
-
         authProducer.sendCreateProfileMessage(model);
-       return repository.save(auth);
+
+        return repository.save(auth);
     }
 
     public LoginResponseDto login(LoginRequestDto req) {
@@ -50,7 +52,13 @@ public class AuthService {
        String token = jwtTokenManager.createToken(a.getId()).orElseThrow(
                ()-> new RuntimeException("Token cannot generate ")
        );
-       return new LoginResponseDto(token);
+        LoginModel loginModel = new LoginModel(
+                a.getId(),
+                LocalDateTime.now(),
+                "192.168.1.1"
+        );
+        authProducer.sendLoginEvent(loginModel);
+        return new LoginResponseDto(token);
     }
 
     public void updateAuth(UUID id, String username, String email) {
@@ -60,26 +68,20 @@ public class AuthService {
     }
 
     public void softDelete(UUID id) {
-        Auth a = repository.findById(id).orElseThrow(
-                ()-> new RuntimeException("No such user")
-        );
-        a.deactivate();
-        repository.save(a);
+        if (!repository.existsById(id)){
+            throw  new RuntimeException("No such user");
+        }
+        repository.softDeleteById(id);
     }
 
-
-
-
-
-
     private Auth getActiveUser(String username){
-        return repository.findByUsernameAndIsActiveTrue(username).orElseThrow(
+        return repository.findActiveByUsername(username).orElseThrow(
                 ()-> new RuntimeException("Username not found")
         );
     }
 
     private Auth getActiveUserById(UUID id){
-        return repository.findByIdAndIsActiveTrue(id).orElseThrow(
+        return repository.findActiveById(id).orElseThrow(
                 ()-> new RuntimeException("User not found")
         );
     }

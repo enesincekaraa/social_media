@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -73,6 +74,16 @@ public class UserService {
         return true;
     }
 
+    public void updateLastLogin(UUID authId, LocalDateTime lastLoginDate, String ip){
+        User u = userRepository.findByAuthId(authId)
+                .orElseThrow(
+                        ()-> new RuntimeException("User not found!")
+                );
+        u.updateLastLogin(lastLoginDate, ip);
+        userRepository.save(u);
+        System.out.println("User last login date updated for: " + authId);
+
+    }
 
 
     private User getUser(UUID authId){
