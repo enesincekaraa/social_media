@@ -131,13 +131,45 @@ class AutServiceTest {
         verify(repository,never()).findActiveById(mockId);
     }
 
+    @Test
+    @DisplayName("Password Update:Successfully Case")
+    void updatePassword_ShouldUpdate_WhenValidRequest() {
+        UUID mockId = UUID.randomUUID();
+        String currentEncodedPass = "encoded_old_password";
+        String newRawPass = "yeniSifre123";
+        String newEncodedPass = "encoded_new_password";
 
+        Auth mockAuth = createMockAuth(mockId, "enes", currentEncodedPass);
 
+        when(repository.findActiveById(mockId)).thenReturn(Optional.of(mockAuth));
 
+        when(passwordService.matches(newRawPass,currentEncodedPass)).thenReturn(false);
+        when(passwordService.encode(newRawPass)).thenReturn(newEncodedPass);
 
+        authService.updatePassword(mockId, newRawPass);
 
+        verify(repository,times(1)).save(any(Auth.class));
+        assertEquals(newEncodedPass,mockAuth.getPassword());
 
+    }
 
+    @Test
+    @DisplayName("Password Update: Error - Same Password")
+    void updatePassword_ShouldThrowException_WhenPasswordsAreSame() {
+        UUID mockId = UUID.randomUUID();
+        String currentEncodedPass = "encoded_password";
+        String sameRawPass = "aynıSifre";
+
+        Auth mockAuth = createMockAuth(mockId, "enes", currentEncodedPass);
+
+        when(repository.findActiveById(mockId)).thenReturn(Optional.of(mockAuth));
+        when(passwordService.matches(sameRawPass, currentEncodedPass)).thenReturn(true);
+
+        assertThrows(IllegalArgumentException.class, () -> authService.updatePassword(mockId, sameRawPass));
+        verify(repository, never()).save(any());
+    }
+
+    
 
     private Auth createMockAuth(
             UUID id,

@@ -1,6 +1,7 @@
 package com.enesincekara.controller;
 
 import com.enesincekara.dto.request.LoginRequestDto;
+import com.enesincekara.dto.request.PasswordChangeRequestDto;
 import com.enesincekara.dto.request.RegisterRequestDto;
 import com.enesincekara.dto.response.LoginResponseDto;
 import com.enesincekara.entity.Auth;
@@ -41,5 +42,11 @@ public class AuthController {
     public ResponseEntity<Void> softDelete(@RequestParam UUID id){
         authService.softDelete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(UPDATEPASSWORD)
+    public ResponseEntity<Boolean> updatePassword(@RequestBody PasswordChangeRequestDto req) {
+        authService.updatePassword(req.authId(), req.newPassword());
+        return ResponseEntity.ok(true);
     }
 }

@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AuthMicroservice" />
             <option value="$PROJECT_DIR$/Common" />
+            <option value="$PROJECT_DIR$/ComplaintService" />
             <option value="$PROJECT_DIR$/UserMicroservice" />
           </set>
         </option>

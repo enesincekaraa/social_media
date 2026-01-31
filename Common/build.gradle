@@ -1,6 +1,14 @@
 dependencies {
+    // 6. satırda muhtemelen bunlardan biri null dönüyor:
     implementation libs.springBootStarterWeb
+    implementation libs.springBootStarterValidation
+    implementation libs.swagger
+
+
+    implementation libs.jjwtApi
+    runtimeOnly libs.jjwtImpl
+    runtimeOnly libs.jjwtJackson
+
     compileOnly libs.lombok
     annotationProcessor libs.lombok
 }
-

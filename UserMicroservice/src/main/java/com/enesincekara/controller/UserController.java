@@ -1,15 +1,13 @@
 package com.enesincekara.controller;
 
 import com.enesincekara.config.JwtTokenManager;
+import com.enesincekara.dto.request.PasswordChangeRequestDto;
 import com.enesincekara.dto.request.UpdateRequestDto;
-import com.enesincekara.dto.request.UpdateUserProfileRequestDto;
-import com.enesincekara.dto.request.UserCreateRequestDto;
 import com.enesincekara.dto.response.UserResponse;
-import com.enesincekara.entity.User;
-import com.enesincekara.rabbitmq.model.RegisterModel;
+import com.enesincekara.entity.SpecificDetailRequestDto;
+import com.enesincekara.model.RegisterModel;
 import com.enesincekara.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,4 +48,19 @@ public class UserController {
         return ResponseEntity.ok(userService.deleteMyAccount(bearerToken));
     }
 
+    @PutMapping(CHANGE)
+    public ResponseEntity<Boolean> changePassword(
+            @RequestHeader(value = "Authorization",required = false) String bearerToken,
+            @RequestBody PasswordChangeRequestDto req
+    ){
+        return ResponseEntity.ok(userService.changePassword(bearerToken,req.newPassword()));
+    }
+
+    @PutMapping("update-details")
+    public ResponseEntity<Void> updateDetails(
+            @RequestHeader(value = "Authorization",required = false)String bearerToken,
+            @RequestBody SpecificDetailRequestDto req){
+        userService.updateSpecificDetails(bearerToken,req);
+        return ResponseEntity.ok().build();
+    }
 }

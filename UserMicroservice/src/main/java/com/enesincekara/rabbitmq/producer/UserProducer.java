@@ -1,7 +1,8 @@
 package com.enesincekara.rabbitmq.producer;
 
+import com.enesincekara.constants.RabbitConstants;
+import com.enesincekara.rabbitmq.model.PasswordChangeModel;
 import com.enesincekara.rabbitmq.model.SoftDeleteModel;
-import com.enesincekara.rabbitmq.config.RabbitMqConfig;
 import com.enesincekara.rabbitmq.model.UpdateUserModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -13,11 +14,10 @@ public class UserProducer {
     private final RabbitTemplate rabbitTemplate;
 
     public void sendSoftDelete(SoftDeleteModel model) {
-        // "Git şu santrale, şu adresi kullanarak şu paketi bırak" diyoruz.
 
         rabbitTemplate.convertAndSend(
-                RabbitMqConfig.EXCHANGE_USER,
-                RabbitMqConfig.ROUTING_KEY_AUTH_SOFT_DELETE,
+                RabbitConstants.EXCHANGE_USER,
+                RabbitConstants.ROUTING_KEY_AUTH_SOFT_DELETE,
                 model
         );
     }
@@ -25,9 +25,17 @@ public class UserProducer {
     public void sendUpdatedUser(UpdateUserModel model){
 
         rabbitTemplate.convertAndSend(
-        RabbitMqConfig.EXCHANGE_USER,
-        RabbitMqConfig.ROUTING_KEY_UPDATE_AUTH,
+        RabbitConstants.EXCHANGE_USER,
+        RabbitConstants.ROUTING_KEY_UPDATE_AUTH,
         model
+        );
+    }
+
+    public void sendPasswordChange(PasswordChangeModel model) {
+        rabbitTemplate.convertAndSend(
+                RabbitConstants.EXCHANGE_USER,
+                RabbitConstants.ROUTING_KEY_UPDATE_PASSWORD,
+                model
         );
     }
 }

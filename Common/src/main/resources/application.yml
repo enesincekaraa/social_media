@@ -1,0 +1,11 @@
+spring:
+  config:
+    import: "optional:file:.env[.properties]"
+
+  application:
+    name: common-service
+
+auth:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    issuer: ${JWT_ISSUER}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="complaint_db@localhost">
+  <database-model serializer="dbm" dbms="MONGO" family-id="MONGO" format-version="4.53">
+    <root id="1">
+      <ServerVersion>8.2.4</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="admin">
+      <LastIntrospectionLocalTimestamp>2026-01-31.13:03:56</LastIntrospectionLocalTimestamp>
+    </schema>
+    <schema id="3" parent="1" name="complaint_db">
+      <Current>1</Current>
+      <LastIntrospectionLocalTimestamp>2026-01-31.13:58:34</LastIntrospectionLocalTimestamp>
+    </schema>
+    <schema id="4" parent="1" name="config">
+      <LastIntrospectionLocalTimestamp>2026-01-31.13:03:56</LastIntrospectionLocalTimestamp>
+    </schema>
+    <schema id="5" parent="1" name="local">
+      <LastIntrospectionLocalTimestamp>2026-01-31.13:03:56</LastIntrospectionLocalTimestamp>
+    </schema>
+    <schema id="6" parent="1" name="user_db">
+      <LastIntrospectionLocalTimestamp>2026-01-31.13:03:56</LastIntrospectionLocalTimestamp>
+    </schema>
+    <table id="7" parent="3" name="complaint"/>
+    <column id="8" parent="7" name="_id">
+      <Position>1</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="9" parent="7" name="_class">
+      <Position>2</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="10" parent="7" name="authId">
+      <Position>3</Position>
+      <StoredType>BinData|12s</StoredType>
+    </column>
+    <column id="11" parent="7" name="category">
+      <Position>4</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="12" parent="7" name="createdAt">
+      <Position>5</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="13" parent="7" name="description">
+      <Position>6</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="14" parent="7" name="imageUrls">
+      <Position>7</Position>
+      <StoredType>Array|2003s</StoredType>
+    </column>
+    <column id="15" parent="7" name="location">
+      <Position>8</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="16" parent="7" name="status">
+      <Position>9</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="17" parent="7" name="title">
+      <Position>10</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="18" parent="7" name="trackingNumber">
+      <Position>11</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <index id="19" parent="7" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+  </database-model>
+</dataSource>

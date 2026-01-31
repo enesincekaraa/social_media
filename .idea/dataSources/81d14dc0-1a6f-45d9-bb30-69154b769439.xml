@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="user_db@localhost">
+  <database-model serializer="dbm" dbms="MONGO" family-id="MONGO" format-version="4.53">
+    <root id="1">
+      <ServerVersion>8.2.4</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="admin"/>
+    <schema id="3" parent="1" name="complaint_db"/>
+    <schema id="4" parent="1" name="config"/>
+    <schema id="5" parent="1" name="local"/>
+    <schema id="6" parent="1" name="user_db">
+      <Current>1</Current>
+      <LastIntrospectionLocalTimestamp>2026-01-31.13:59:08</LastIntrospectionLocalTimestamp>
+    </schema>
+    <table id="7" parent="6" name="users"/>
+    <column id="8" parent="7" name="_id">
+      <Position>1</Position>
+      <StoredType>ObjectId|12s</StoredType>
+    </column>
+    <column id="9" parent="7" name="_class">
+      <Position>2</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="10" parent="7" name="authId">
+      <Position>3</Position>
+      <StoredType>BinData|12s</StoredType>
+    </column>
+    <column id="11" parent="7" name="avatar">
+      <Position>4</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="12" parent="7" name="bio">
+      <Position>5</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="13" parent="7" name="complaintCount">
+      <Position>6</Position>
+      <StoredType>Int32|4s</StoredType>
+    </column>
+    <column id="14" parent="7" name="createdAt">
+      <Position>7</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="15" parent="7" name="email">
+      <Position>8</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="16" parent="7" name="lastLoginDate">
+      <Position>9</Position>
+      <StoredType>ISODate|91s</StoredType>
+    </column>
+    <column id="17" parent="7" name="lastLoginIp">
+      <Position>10</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="18" parent="7" name="role">
+      <Position>11</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <column id="19" parent="7" name="username">
+      <Position>12</Position>
+      <StoredType>String|12s</StoredType>
+    </column>
+    <index id="20" parent="7" name="_id_">
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+  </database-model>
+</dataSource>

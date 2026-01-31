@@ -11,4 +11,6 @@ public class RestApis {
     public static final String UPDATE = "/internal-update";
     public static final String DELETE = "/internal-soft-delete";
 
+    public static final String UPDATEPASSWORD ="/update-password";
+
 }

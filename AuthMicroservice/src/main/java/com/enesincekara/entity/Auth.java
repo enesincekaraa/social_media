@@ -1,6 +1,8 @@
 package com.enesincekara.entity;
 
 import com.enesincekara.dto.request.RegisterRequestDto;
+import com.enesincekara.entity.enums.ERole;
+import com.enesincekara.rabbitmq.model.PasswordChangeModel;
 import com.enesincekara.service.PasswordService;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +24,8 @@ public class Auth {
     String email;
     Boolean isActive;
     LocalDateTime createdAt;
+    @Enumerated(EnumType.STRING)
+    ERole role;
 
     public static Auth create(RegisterRequestDto req, PasswordService passwordService) {
 
@@ -36,6 +40,8 @@ public class Auth {
         auth.email = req.email();
         auth.isActive = true;
         auth.createdAt = LocalDateTime.now();
+
+        auth.role = (req.role() == null) ? ERole.VATANDAS : req.role();
         return auth;
     }
 
@@ -53,6 +59,18 @@ public class Auth {
     public void update(String username, String email){
         this.username = username;
         this.email = email;
+    }
+
+    public void updatePassword(String newPassword,PasswordService passwordService){
+        if (newPassword == null || newPassword.isBlank()) {
+            throw new IllegalArgumentException("New password cannot be empty");
+        }
+
+        if (passwordService.matches(newPassword,this.password)) {
+            throw  new IllegalArgumentException("New password must be different from current password");
+        }
+
+        this.password = passwordService.encode(newPassword);
     }
 
     public void changePassword(String newPassword, String confirmPassword) {

@@ -11,4 +11,6 @@ public class RestApis {
     public static final String UPDATE = "/update-profile";
     public static final String GETPROFILE = "/get-profile";
     public static final String DELETE = "/delete-profile";
+    public static final String CHANGE = "/change-password";
+
 }

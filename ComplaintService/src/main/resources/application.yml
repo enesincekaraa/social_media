@@ -1,0 +1,50 @@
+server:
+  port: 9092
+
+spring:
+
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    port: ${RABBIT_PORT}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: complaint_db
+      username: ${MONGO_USER}
+      password: ${MONGO_PASSWORD}
+      authentication-database: admin
+
+  config:
+    import: "optional:file:.env[.properties]"
+
+  application:
+    name: complaint-service
+
+
+management:
+  observations:
+    key-values:
+      application: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      type: "W3C"
+  zipkin:
+    tracing:
+      endpoint: "http://localhost:9411/api/v2/spans"
+
+logging:
+  # Spring Boot 3'ün bu verileri loglara enjekte etmesini sağlar
+  register-proxy: true
+  pattern:
+    level: "%5p [%X{traceId:-},%X{spanId:-}]"
+
+auth:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    issuer: ${JWT_ISSUER}

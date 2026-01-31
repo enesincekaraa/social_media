@@ -3,7 +3,6 @@ dependencies {
     implementation libs.springBootStarterWeb
     implementation libs.springBootStarterMongoDB
     implementation libs.springBootStarterValidation
-    //implementation libs.openfeign
     implementation libs.swagger
 
     implementation project(':Common')
