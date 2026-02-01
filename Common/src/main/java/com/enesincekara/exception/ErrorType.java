@@ -16,8 +16,10 @@ public enum ErrorType {
     // Auth Servis Hataları
     INVALID_TOKEN(5001, "Geçersiz token!", HttpStatus.UNAUTHORIZED),
     WRONG_PASSWORD(5002, "Şifre hatalı!", HttpStatus.BAD_REQUEST),
-    USERNAME_ALREADY_EXISTS(5003, "Bu kullanıcı adı zaten alınmış!", HttpStatus.BAD_REQUEST);
+    USERNAME_ALREADY_EXISTS(5003, "Bu kullanıcı adı zaten alınmış!", HttpStatus.BAD_REQUEST),
 
+    // Complaint Servis Hataları
+    COMPLAINT_NOT_FOUND(4004,"Şikayet bulunamadı!",HttpStatus.NOT_FOUND);
     private final Integer code;
     private final String message;
     private final HttpStatus httpStatus;
