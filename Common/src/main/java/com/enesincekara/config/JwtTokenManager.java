@@ -36,4 +36,23 @@ public class JwtTokenManager {
             return Optional.empty();
         }
     }
+
+    public Optional<String> getRoleFromToken(String token) {
+        try {
+            SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+
+            String role = claims.get("role", String.class);
+            return Optional.of(role);
+
+        } catch (Exception ex) {
+
+            return Optional.empty();
+        }
+    }
 }
