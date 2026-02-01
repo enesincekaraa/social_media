@@ -31,7 +31,9 @@ public class RabbitConstants {
     public static final String QUEUE_CREATE_COMPLAINT = "queue-create-complaint";
     public static final String ROUTING_KEY_CREATE_COMPLAINT = "routing-key-create-complaint";
 
+    public static final String EXCHANGE_NOTIFICATION = "exchange-notification";
 
-
+    public static final String QUEUE_NOTIFICATION = "queue-notification";
+    public static final String ROUTING_KEY_NOTIFICATION = "routing-key-notification";
 
 }
