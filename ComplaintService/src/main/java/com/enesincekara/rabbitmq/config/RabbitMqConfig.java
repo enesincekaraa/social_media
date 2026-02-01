@@ -28,6 +28,16 @@ public class RabbitMqConfig {
 
 
     @Bean
+    public Queue updateComplaintQueue() {
+        return new Queue(RabbitConstants.QUEUE_NOTIFICATION, true);
+    }
+    @Bean
+    public Binding bindingUpdateComplaint(final Queue updateComplaintQueue, final DirectExchange complaintExchange) {
+        return BindingBuilder.bind(updateComplaintQueue).to(complaintExchange).with(RabbitConstants.ROUTING_KEY_NOTIFICATION);
+    }
+
+
+    @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
