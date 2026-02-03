@@ -6,10 +6,13 @@ import com.enesincekara.dto.request.UpdateRequestDto;
 import com.enesincekara.dto.response.UserResponse;
 import com.enesincekara.entity.SpecificDetailRequestDto;
 import com.enesincekara.model.RegisterModel;
+import com.enesincekara.model.UserContactResponse;
 import com.enesincekara.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 import static com.enesincekara.config.RestApis.*;
 
@@ -56,11 +59,17 @@ public class UserController {
         return ResponseEntity.ok(userService.changePassword(bearerToken,req.newPassword()));
     }
 
-    @PutMapping("update-details")
+    @PutMapping(UPDATE_DETAILS)
     public ResponseEntity<Void> updateDetails(
             @RequestHeader(value = "Authorization",required = false)String bearerToken,
             @RequestBody SpecificDetailRequestDto req){
         userService.updateSpecificDetails(bearerToken,req);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping(CONTACT)
+    public ResponseEntity<UserContactResponse> getContactInfo(@PathVariable UUID authId) {
+        return ResponseEntity.ok(userService.getContactInfo(authId));
+    }
+
 }

@@ -32,9 +32,10 @@ public class AuthController {
     public ResponseEntity<Void> internalUpdate(
             @RequestParam UUID id,
             @RequestParam String username,
-            @RequestParam String email
+            @RequestParam String email,
+            @RequestParam String phone
             ){
-        authService.updateAuth(id, username, email);
+        authService.updateAuth(id, username, email, phone);
         return ResponseEntity.ok().build();
     }
 

@@ -6,6 +6,7 @@ import java.util.UUID;
 public record RegisterModel(
         UUID authId,
         String username,
+        String phone,
         String email
 ) implements Serializable {
 }

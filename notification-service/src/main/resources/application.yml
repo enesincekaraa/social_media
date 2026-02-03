@@ -1,0 +1,19 @@
+server:
+  port: 9094
+
+spring:
+  application:
+    name: notification-service
+  config:
+    import: "optional:file:.env[.properties]"
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    port: ${RABBIT_PORT}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+
+
+auth:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    issuer: ${JWT_ISSUER}

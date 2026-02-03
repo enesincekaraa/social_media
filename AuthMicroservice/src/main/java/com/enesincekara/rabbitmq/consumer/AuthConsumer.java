@@ -26,7 +26,7 @@ public class AuthConsumer {
     public void receiveUpdateAuthMessage(UserUpdateModel model){
         System.out.println("Received update auth message!" + model.username());
 
-        authService.updateAuth(model.authId(),model.username(),model.email());
+        authService.updateAuth(model.authId(),model.username(),model.email(),model.phone());
     }
 
     @RabbitListener(queues = RabbitConstants.QUEUE_UPDATE_PASSWORD)

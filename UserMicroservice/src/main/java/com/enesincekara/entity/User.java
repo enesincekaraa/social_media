@@ -23,6 +23,7 @@ public class User {
     private UUID authId;
     private String username;
     private String email;
+    private String phone;
     private ERole role;
     private String avatar;
     private String bio;
@@ -38,11 +39,12 @@ public class User {
     private Integer complaintCount = 0;
 
 
-    public static User createProfile(UUID authId, String username, String email,ERole role) {
+    public static User createProfile(UUID authId, String username, String email,String phone,ERole role) {
         return User.builder()
                 .authId(authId)
                 .username(username)
                 .email(email)
+                .phone(phone)
                 .role(role)
                 .createdAt(LocalDateTime.now())
                 .avatar("default-avatar.png")
@@ -50,18 +52,22 @@ public class User {
                 .build();
     }
 
-    public void update(String username, String email) {
-       validate(username, email);
+    public void update(String username, String email,String phone) {
+       validate(username, email, phone);
        this.username = username;
        this.email = email;
+       this.phone = phone;
     }
 
-    private void validate(String username, String email) {
+    private void validate(String username, String email,String phone) {
         if (username == null || username.isBlank()) {
             throw new IllegalArgumentException("Username cannot be null or empty");
         }
         if (email == null || email.isBlank()) {
             throw new IllegalArgumentException("Email cannot be null or empty");
+        }
+        if (phone == null || phone.isBlank()) {
+            throw new IllegalArgumentException("Phone cannot be null or empty");
         }
     }
 

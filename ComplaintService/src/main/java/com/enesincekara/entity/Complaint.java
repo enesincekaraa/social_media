@@ -20,7 +20,7 @@ public class Complaint {
 
     @Id
     private String id;
-    private UUID authId;           // Şikayeti yapan vatandaşın kimliği
+    private UUID authId;// Şikayeti yapan vatandaşın kimliği
     private String title;          // Şikayet başlığı [cite: 64]
     private String description;    // Detaylı açıklama [cite: 62]
     private String category;       // Yol, Su, Park, Temizlik vb. [cite: 64]
@@ -31,7 +31,7 @@ public class Complaint {
     private LocalDateTime createdAt;
 
 
-    public static Complaint create(UUID authId, String title,
+    public static Complaint create(UUID authId,String title,
                                    String description, String category,
                                    List<String> imageUrls, String location) {
         validate(title,description);

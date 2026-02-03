@@ -9,6 +9,7 @@ public record RegisterModel(
         UUID authId,
         String username,
         String email,
+        String phone,
         ERole eRole
 ) implements Serializable {
 }
