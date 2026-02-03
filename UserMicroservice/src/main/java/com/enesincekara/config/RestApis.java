@@ -12,5 +12,7 @@ public class RestApis {
     public static final String GETPROFILE = "/get-profile";
     public static final String DELETE = "/delete-profile";
     public static final String CHANGE = "/change-password";
+    public static final String CONTACT = "/contact-info/{authId}";
+    public static final String UPDATE_DETAILS ="update-details";
 
 }

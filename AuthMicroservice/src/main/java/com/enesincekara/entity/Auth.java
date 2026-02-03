@@ -22,6 +22,7 @@ public class Auth {
     String username;
     String password;
     String email;
+    String phone;
     Boolean isActive;
     LocalDateTime createdAt;
     @Enumerated(EnumType.STRING)
@@ -38,6 +39,7 @@ public class Auth {
         auth.username = req.username();
         auth.password = passwordService.encode(req.password());
         auth.email = req.email();
+        auth.phone = req.phone();
         auth.isActive = true;
         auth.createdAt = LocalDateTime.now();
 
@@ -56,9 +58,10 @@ public class Auth {
         this.isActive = (activeParam == null) ? true : activeParam;
     }
 
-    public void update(String username, String email){
+    public void update(String username, String email,String phone){
         this.username = username;
         this.email = email;
+
     }
 
     public void updatePassword(String newPassword,PasswordService passwordService){

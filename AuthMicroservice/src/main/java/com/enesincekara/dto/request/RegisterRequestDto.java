@@ -6,6 +6,7 @@ public record RegisterRequestDto(
         String username,
         String password,
         String repassword,
+        String phone,
         String email,
         ERole role
 ) {

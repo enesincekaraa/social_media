@@ -5,6 +5,7 @@ import com.enesincekara.entity.*;
 import com.enesincekara.exception.BaseException;
 import com.enesincekara.exception.ErrorType;
 import com.enesincekara.model.RegisterModel;
+import com.enesincekara.model.UserContactResponse;
 import com.enesincekara.projection.IUserProfileProjection;
 import com.enesincekara.rabbitmq.model.PasswordChangeModel;
 import com.enesincekara.rabbitmq.model.SoftDeleteModel;
@@ -33,6 +34,7 @@ public class UserService {
                 model.authId(),
                 model.username(),
                 model.email(),
+                model.phone(),
                 model.eRole()
         );
         userRepository.save(user);
@@ -44,7 +46,7 @@ public class UserService {
 
         UUID authId = getAuthId(getToken(bearerToken));
         User u =  getUser(authId);
-        u.update(req.username(), req.email());
+        u.update(req.username(), req.email(), req.phone());
         userRepository.save(u);
 
         UpdateUserModel model=new UpdateUserModel(
@@ -65,6 +67,7 @@ public class UserService {
         return new UserResponse(
                 projection.getUsername(),
                 projection.getEmail(),
+                projection.getPhone(),
                 projection.getAvatar(),
                 projection.getBio()
         );
@@ -149,5 +152,12 @@ public class UserService {
         user.incrementComplaintCount();
         userRepository.save(user);
         System.out.println("User complaint count updated for: " + user.getUsername());
+    }
+
+    public UserContactResponse getContactInfo(UUID authId) {
+        User user = getUser(authId);
+        return new UserContactResponse(
+                user.getEmail(),user.getPhone()
+        );
     }
 }

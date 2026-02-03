@@ -35,12 +35,14 @@ public class AuthService {
         if (repository.isEmailExists(req.email())) {
             throw new RuntimeException("Email is already in use");
         }
+
         Auth auth = Auth.create(req,passwordService);
 
         com.enesincekara.model.RegisterModel model = new RegisterModel(
                 auth.getId(),
                 auth.getUsername(),
                 auth.getEmail(),
+                auth.getPhone(),
                 auth.getRole()
         );
 
@@ -54,7 +56,7 @@ public class AuthService {
         if (!a.validateLogin(req.password(), passwordService)){
            throw new RuntimeException("Wrong password");
         }
-       String token = jwtTokenManager.createToken(a.getId()).orElseThrow(
+       String token = jwtTokenManager.createToken(a.getId(),a.getRole()).orElseThrow(
                ()-> new RuntimeException("Token cannot generate ")
        );
         LoginModel loginModel = new LoginModel(
@@ -66,9 +68,9 @@ public class AuthService {
         return new LoginResponseDto(token);
     }
 
-    public void updateAuth(UUID id, String username, String email) {
+    public void updateAuth(UUID id, String username, String email, String phone) {
        Auth a = getActiveUserById(id);
-       a.update(username, email);
+       a.update(username, email, phone);
        repository.save(a);
     }
 

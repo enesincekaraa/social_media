@@ -11,9 +11,8 @@
 4||10|c|G
 4||10|C|G
 4||10|T|G</Grants>
-      <IntrospectionStateNumber>778</IntrospectionStateNumber>
       <ServerVersion>16.11</ServerVersion>
-      <StartupTime>1769862283</StartupTime>
+      <StartupTime>1770126821</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -707,7 +706,6 @@ false posixrules
 13276||10|C|G
 13276||-9223372036854775808|U|G
 13276||10|U|G</Grants>
-      <IntrospectionStateNumber>778</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>admin</OwnerName>
     </database>
@@ -716,7 +714,52 @@ false posixrules
       <ObjectId>5</ObjectId>
       <OwnerName>admin</OwnerName>
     </database>
-    <role id="4" parent="1" name="admin">
+    <role id="4" parent="1" name="pg_database_owner">
+      <ObjectId>6171</ObjectId>
+    </role>
+    <role id="5" parent="1" name="pg_read_all_data">
+      <ObjectId>6181</ObjectId>
+    </role>
+    <role id="6" parent="1" name="pg_write_all_data">
+      <ObjectId>6182</ObjectId>
+    </role>
+    <role id="7" parent="1" name="pg_monitor">
+      <ObjectId>3373</ObjectId>
+      <RoleGrants>3374
+3375
+3377</RoleGrants>
+    </role>
+    <role id="8" parent="1" name="pg_read_all_settings">
+      <ObjectId>3374</ObjectId>
+    </role>
+    <role id="9" parent="1" name="pg_read_all_stats">
+      <ObjectId>3375</ObjectId>
+    </role>
+    <role id="10" parent="1" name="pg_stat_scan_tables">
+      <ObjectId>3377</ObjectId>
+    </role>
+    <role id="11" parent="1" name="pg_read_server_files">
+      <ObjectId>4569</ObjectId>
+    </role>
+    <role id="12" parent="1" name="pg_write_server_files">
+      <ObjectId>4570</ObjectId>
+    </role>
+    <role id="13" parent="1" name="pg_execute_server_program">
+      <ObjectId>4571</ObjectId>
+    </role>
+    <role id="14" parent="1" name="pg_signal_backend">
+      <ObjectId>4200</ObjectId>
+    </role>
+    <role id="15" parent="1" name="pg_checkpoint">
+      <ObjectId>4544</ObjectId>
+    </role>
+    <role id="16" parent="1" name="pg_use_reserved_connections">
+      <ObjectId>4550</ObjectId>
+    </role>
+    <role id="17" parent="1" name="pg_create_subscription">
+      <ObjectId>6304</ObjectId>
+    </role>
+    <role id="18" parent="1" name="admin">
       <BypassRls>1</BypassRls>
       <CanLogin>1</CanLogin>
       <CreateDb>1</CreateDb>
@@ -724,51 +767,6 @@ false posixrules
       <ObjectId>10</ObjectId>
       <Replication>1</Replication>
       <SuperRole>1</SuperRole>
-    </role>
-    <role id="5" parent="1" name="pg_checkpoint">
-      <ObjectId>4544</ObjectId>
-    </role>
-    <role id="6" parent="1" name="pg_create_subscription">
-      <ObjectId>6304</ObjectId>
-    </role>
-    <role id="7" parent="1" name="pg_database_owner">
-      <ObjectId>6171</ObjectId>
-    </role>
-    <role id="8" parent="1" name="pg_execute_server_program">
-      <ObjectId>4571</ObjectId>
-    </role>
-    <role id="9" parent="1" name="pg_monitor">
-      <ObjectId>3373</ObjectId>
-      <RoleGrants>3374
-3375
-3377</RoleGrants>
-    </role>
-    <role id="10" parent="1" name="pg_read_all_data">
-      <ObjectId>6181</ObjectId>
-    </role>
-    <role id="11" parent="1" name="pg_read_all_settings">
-      <ObjectId>3374</ObjectId>
-    </role>
-    <role id="12" parent="1" name="pg_read_all_stats">
-      <ObjectId>3375</ObjectId>
-    </role>
-    <role id="13" parent="1" name="pg_read_server_files">
-      <ObjectId>4569</ObjectId>
-    </role>
-    <role id="14" parent="1" name="pg_signal_backend">
-      <ObjectId>4200</ObjectId>
-    </role>
-    <role id="15" parent="1" name="pg_stat_scan_tables">
-      <ObjectId>3377</ObjectId>
-    </role>
-    <role id="16" parent="1" name="pg_use_reserved_connections">
-      <ObjectId>4550</ObjectId>
-    </role>
-    <role id="17" parent="1" name="pg_write_all_data">
-      <ObjectId>6182</ObjectId>
-    </role>
-    <role id="18" parent="1" name="pg_write_server_files">
-      <ObjectId>4570</ObjectId>
     </role>
     <tablespace id="19" parent="1" name="pg_default">
       <ObjectId>1663</ObjectId>
@@ -4132,9 +4130,6 @@ false posixrules
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <LastIntrospectionL1Xid>778</LastIntrospectionL1Xid>
-      <LastIntrospectionL2Xid>778</LastIntrospectionL2Xid>
-      <LastIntrospectionL3Xid>778</LastIntrospectionL3Xid>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
       <LastIntrospectionLocalTimestamp>2026-01-31.12:32:08</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
@@ -4144,7 +4139,7 @@ false posixrules
     <table id="265" parent="264" name="tbl_auth">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16403</ObjectId>
-      <StateNumber>772</StateNumber>
+      <StateNumber>779</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>admin</OwnerName>
     </table>
@@ -4197,7 +4192,13 @@ false posixrules
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="274" parent="265" name="tbl_auth_pkey">
+    <column id="274" parent="265" name="phone">
+      <Position>8</Position>
+      <StateNumber>779</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="275" parent="265" name="tbl_auth_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16408</ObjectId>
@@ -4206,7 +4207,7 @@ false posixrules
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="275" parent="265" name="tbl_auth_pkey">
+    <key id="276" parent="265" name="tbl_auth_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16409</ObjectId>
       <Primary>1</Primary>

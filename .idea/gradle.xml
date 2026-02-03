@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/Common" />
             <option value="$PROJECT_DIR$/ComplaintService" />
             <option value="$PROJECT_DIR$/UserMicroservice" />
+            <option value="$PROJECT_DIR$/notification-service" />
           </set>
         </option>
       </GradleProjectSettings>

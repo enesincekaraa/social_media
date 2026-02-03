@@ -5,6 +5,7 @@ import java.util.UUID;
 public record UserUpdateModel(
         UUID authId,
         String username,
-        String email
+        String email,
+        String phone
 ) {
 }

@@ -6,4 +6,5 @@ public interface IUserProfileProjection {
     String getEmail();
     String getAvatar();
     String getBio();
+    String getPhone();
 }

@@ -1,5 +1,6 @@
 package com.enesincekara.config;
 
+import com.enesincekara.entity.enums.ERole;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -23,7 +24,7 @@ public class JwtTokenManager {
     private final Long EXPIRATION_TIME = 1000L * 60 * 30;
 
 
-    public Optional<String> createToken(UUID id){
+    public Optional<String> createToken(UUID id, ERole role) {
         try {
             SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
             String token = Jwts.builder()
@@ -31,6 +32,7 @@ public class JwtTokenManager {
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                     .claim("authId",id.toString())
+                    .claim("role",role.toString())
                     .signWith(key, SignatureAlgorithm.HS256)
                     .compact();
             return Optional.of(token);

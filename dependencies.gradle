@@ -4,7 +4,7 @@ ext {
             postgreSQL      : '42.7.4',
             lombok          : '1.18.34',
             swagger         : '2.7.0',
-            //openfeign       : '13.5',
+            openfeign       : '13.5',
             jjwt            : '0.11.5'
     ]
     libs = [
@@ -24,7 +24,7 @@ ext {
             // Tracing & Logging Kütüphaneleri
             micrometerTracing         : "io.micrometer:micrometer-tracing-bridge-brave",
             zipkinReporter            : "io.zipkin.reporter2:zipkin-reporter-brave",
-            //openfeign      : "org.springframework.cloud:spring-cloud-starter-openfeign",
+            openfeign      : "org.springframework.cloud:spring-cloud-starter-openfeign",
             //feignMicrometer : "io.github.openfeign:feign-micrometer:${versions.openfeign}",
 
 

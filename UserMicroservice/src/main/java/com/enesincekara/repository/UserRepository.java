@@ -12,7 +12,7 @@ public interface UserRepository extends MongoRepository<User, String> {
     Optional<User> findByUsername(String username);
     Optional<User> findByAuthId(UUID authId);
 
-    @Query(value = "{ 'authId' : ?0 }", fields = "{ 'username' : 1, 'email' : 1, 'avatar' : 1, 'bio' : 1 }")
+    @Query(value = "{ 'authId' : ?0 }", fields = "{ 'username' : 1, 'email' : 1,'phone': 1, 'avatar' : 1, 'bio' : 1 }")
     Optional<IUserProfileProjection> findByAuthIdProjected(UUID authId);
 
 

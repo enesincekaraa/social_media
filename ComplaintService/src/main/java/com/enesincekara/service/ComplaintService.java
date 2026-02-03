@@ -9,12 +9,14 @@ import com.enesincekara.entity.enums.EStatus;
 import com.enesincekara.exception.BaseException;
 import com.enesincekara.exception.ErrorType;
 import com.enesincekara.model.ComplaintCreateModel;
+import com.enesincekara.model.NotificationModel;
 import com.enesincekara.rabbitmq.producer.ComplaintProducer;
 import com.enesincekara.repository.ComplaintRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,13 +71,20 @@ public class ComplaintService {
 
     @Transactional
     public void updateComplaintStatus(String id, EStatus newStatus,String bearerToken) {
-       checkAdminRole(bearerToken);
+        checkAdminRole(bearerToken);
+
         Complaint complaint = repository.findById(id)
                 .orElseThrow(
                         ()-> new BaseException(ErrorType.COMPLAINT_NOT_FOUND)
                 );
         complaint.updateStatus(newStatus);
         repository.save(complaint);
+        producer.sendUpdateComplaintMessage(new NotificationModel(
+                complaint.getAuthId(),
+                "Şikayet Güncellemesi",
+               complaint.getTrackingNumber()+ ": Takip numaralı şikayetiniz '" + newStatus + "' durumuna getirildi.",
+                LocalDateTime.now()));
+        System.out.println("Complaint updated sending successfully");
     }
 
 
@@ -116,6 +125,7 @@ public class ComplaintService {
             throw new BaseException(ErrorType.BAD_REQUEST_ERROR);
         }
     }
+
 
 
 }
