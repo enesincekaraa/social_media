@@ -1,0 +1,15 @@
+dependencies {
+    implementation(project(':Common')) {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        // Common içinden swagger kırıntısı gelirse onu da engelle
+        exclude group: 'org.springdoc', module: 'springdoc-openapi-starter-webmvc-ui'
+    }
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.7.0'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
