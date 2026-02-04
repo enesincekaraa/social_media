@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMqConfig {
+
     @Bean
     public DirectExchange complaintExchange() {
         return new DirectExchange(RabbitConstants.EXCHANGE_COMPLAINT);

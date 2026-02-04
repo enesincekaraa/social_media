@@ -79,6 +79,9 @@ public class RabbitMqConfig {
     }
 
 
+
+
+
     @Bean
     public Binding bindingAuthSoftDelete(final Queue authSoftDeleteQueue, final DirectExchange userExchange) {
         return BindingBuilder.bind(authSoftDeleteQueue).to(userExchange).with(ROUTING_KEY_AUTH_SOFT_DELETE);
@@ -93,6 +96,8 @@ public class RabbitMqConfig {
     public Binding bindingUpdatePassword(final Queue updatePasswordQueue, final DirectExchange userExchange) {
         return BindingBuilder.bind(updatePasswordQueue).to(userExchange).with(ROUTING_KEY_UPDATE_PASSWORD);
     }
+
+
 
 
     @Bean

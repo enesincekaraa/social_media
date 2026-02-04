@@ -111,6 +111,13 @@ public class UserService {
         return true;
     }
 
+    public UserContactResponse getContactInfo(UUID authId) {
+        User user = getUser(authId);
+        return new UserContactResponse(
+                user.getEmail(),user.getPhone()
+                );
+    }
+
 
 
     public void updateSpecificDetails(String bearerToken, SpecificDetailRequestDto dto){
@@ -154,10 +161,5 @@ public class UserService {
         System.out.println("User complaint count updated for: " + user.getUsername());
     }
 
-    public UserContactResponse getContactInfo(UUID authId) {
-        User user = getUser(authId);
-        return new UserContactResponse(
-                user.getEmail(),user.getPhone()
-        );
-    }
+
 }

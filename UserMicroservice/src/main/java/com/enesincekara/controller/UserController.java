@@ -69,7 +69,7 @@ public class UserController {
 
     @GetMapping(CONTACT)
     public ResponseEntity<UserContactResponse> getContactInfo(@PathVariable UUID authId) {
-        return ResponseEntity.ok(userService.getContactInfo(authId));
+        return ResponseEntity.ok( userService.getContactInfo(authId));
     }
 
 }

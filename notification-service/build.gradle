@@ -1,6 +1,8 @@
 dependencies {
     implementation project(':Common')
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'com.twilio.sdk:twilio:10.1.0'
 
 }
 
