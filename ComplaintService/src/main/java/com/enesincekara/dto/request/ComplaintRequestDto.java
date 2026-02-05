@@ -7,7 +7,8 @@ public record ComplaintRequestDto(
         String description,
         String category,
         List<String> imageUrls,
-        String location
+        Double latitude,
+        Double longitude
 
 
 ) {

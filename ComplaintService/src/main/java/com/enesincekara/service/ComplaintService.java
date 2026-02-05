@@ -2,7 +2,7 @@ package com.enesincekara.service;
 
 import com.enesincekara.config.JwtTokenManager;
 import com.enesincekara.dto.request.ComplaintRequestDto;
-import com.enesincekara.dto.response.ComplaintResponse;
+import com.enesincekara.dto.response.*;
 import com.enesincekara.entity.Complaint;
 import com.enesincekara.entity.enums.ERole;
 import com.enesincekara.entity.enums.EStatus;
@@ -39,10 +39,13 @@ public class ComplaintService {
                 req.description(),
                 req.category(),
                 req.imageUrls(),
-                req.location()
+                req.latitude(),
+                req.longitude()
+
         );
         repository.save(c);
         System.out.println("Complaint created successfully");
+
         producer.sendCreateComplaintMessage(new ComplaintCreateModel(
                 c.getId(),authId, c.getTitle(), c.getCategory(),c.getCreatedAt()
         ));
@@ -85,6 +88,60 @@ public class ComplaintService {
                complaint.getTrackingNumber()+ ": Takip numaralı şikayetiniz '" + newStatus + "' durumuna getirildi.",
                 LocalDateTime.now()));
         System.out.println("Complaint updated sending successfully");
+    }
+
+    public List<ComplaintResponse> getComplaintsNearMe(Double lat, Double lon, Double radiusInKm, String bearerToken) {
+        // 1. Güvenlik Kontrolü
+        UUID authId = getAuthId(bearerToken);
+        if (authId == null) {
+            throw new BaseException(ErrorType.INVALID_TOKEN);
+        }
+
+        // 2. PostgreSQL Repository'e saf Double değerlerini gönderiyoruz
+        // DİKKAT: Artık MongoDB'deki gibi (lon, lat) sırası şart değil,
+        // Repository sorgusunda hangi sırayla yazdıysan o geçerli.
+        return repository.findNear(lat, lon, radiusInKm)
+                .stream()
+                .map(this::mapToDto)
+                .toList();
+    }
+
+    public List<ComplaintStatsResponse> getCategoryStats(String bearerToken) {
+        checkAdminRole(bearerToken);
+        return repository.getStatsByCategory();
+    }
+
+
+    public List<DailyComplaintReportResponse> getWeeklyReport(String bearerToken) {
+        checkAdminRole(bearerToken);
+
+        LocalDateTime sevenDaysAgo = LocalDateTime.now().minusDays(7);
+
+        return repository.getDailyReport(sevenDaysAgo);
+    }
+
+    public List<CategoryPerformanceResponse> getCategoryPerformanceReport(String bearerToken) {
+        checkAdminRole(bearerToken);
+
+        return repository.getCategoryPerformance();
+    }
+
+    public List<RegionalDensityResponse> getRegionalDensityReport(Double lat, Double lon, Double radius, String bearerToken) {
+        checkAdminRole(bearerToken);
+
+        List<Object[]> results = repository.getRegionalDensity(lat, lon, radius);
+
+        return results.stream().map(result -> new RegionalDensityResponse(
+                (String) result[0],               // category
+                ((Number) result[1]).longValue(), // count
+                EStatus.valueOf((String) result[2]) // status
+        )).toList();
+    }
+
+    public List<UserComplaintStatsResponse> getTopReportersReport(String bearerToken) {
+        checkAdminRole(bearerToken);
+
+        return repository.getUserComplaintStats();
     }
 
 
