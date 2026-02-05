@@ -9,14 +9,21 @@ spring:
     username: ${RABBIT_USERNAME}
     password: ${RABBIT_PASSWORD}
 
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: complaint_db
-      username: ${MONGO_USER}
-      password: ${MONGO_PASSWORD}
-      authentication-database: admin
+  datasource:
+    url: jdbc:postgresql://localhost:5432/complaint_db
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update # Tabloları otomatik oluşturur
+    show-sql: true # Sorguları loglarda görmek için (Analiz yaparken çok lazım olacak)
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
 
   config:
     import: "optional:file:.env[.properties]"

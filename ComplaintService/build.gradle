@@ -1,10 +1,13 @@
 dependencies {
     // 6. satırda muhtemelen bunlardan biri null dönüyor:
     implementation libs.springBootStarterWeb
-    implementation libs.springBootStarterMongoDB
-    implementation libs.springBootStarterValidation
+    //implementation libs.springBootStarterMongoDB
     //implementation libs.openfeign
+
+    implementation libs.springBootStarterValidation
     implementation libs.swagger
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'org.postgresql:postgresql'
 
     implementation project(':Common')
 

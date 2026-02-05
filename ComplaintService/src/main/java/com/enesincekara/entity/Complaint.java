@@ -3,15 +3,16 @@ package com.enesincekara.entity;
 import com.enesincekara.entity.enums.EStatus;
 import com.enesincekara.exception.BaseException;
 import com.enesincekara.exception.ErrorType;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Document
+@Entity
+@Table(name = "tbl_complaints")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -20,21 +21,33 @@ public class Complaint {
 
     @Id
     private String id;
-    private UUID authId;// Şikayeti yapan vatandaşın kimliği
-    private String title;          // Şikayet başlığı [cite: 64]
-    private String description;    // Detaylı açıklama [cite: 62]
-    private String category;       // Yol, Su, Park, Temizlik vb. [cite: 64]
-    private List<String> imageUrls; // Fotoğraf ve video linkleri [cite: 65]
-    private String location;       // Konum bazlı raporlama (Enlem/Boylam) [cite: 66]
-    private EStatus status;        // Şikayetin güncel durumu
-    private String trackingNumber; // Vatandaşın sorgulama yapabileceği numara [cite: 67]
+    private UUID authId;
+    private String title;
+
+    @Column(length = 1000)
+    private String description;
+
+    private String category;
+
+    @ElementCollection
+    @CollectionTable(name = "complaint_images", joinColumns = @JoinColumn(name = "complaint_id"))
+    @Column(name = "image_url")
+    private List<String> imageUrls;
+
+    private Double latitude;
+    private Double longitude;
+
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
+
+    private String trackingNumber;
     private LocalDateTime createdAt;
 
 
-    public static Complaint create(UUID authId,String title,
-                                   String description, String category,
-                                   List<String> imageUrls, String location) {
-        validate(title,description);
+    public static Complaint create(UUID authId, String title, String description,
+                                   String category, List<String> imageUrls,
+                                   Double lat, Double lon) {
+        validate(title, description);
 
         return Complaint.builder()
                 .id(UUID.randomUUID().toString())
@@ -43,7 +56,8 @@ public class Complaint {
                 .description(description)
                 .category(category)
                 .imageUrls(imageUrls)
-                .location(location)
+                .latitude(lat)
+                .longitude(lon)
                 .status(EStatus.PENDING)
                 .trackingNumber("EYNS-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase())
                 .createdAt(LocalDateTime.now())
